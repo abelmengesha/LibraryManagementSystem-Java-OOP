@@ -22,7 +22,7 @@ public String email(){
     public String getrole(){
     return role;
 }
-public void setId(int d){
+public void setId(int id){
     this.id=id;
 }
 public void  setName(String name){

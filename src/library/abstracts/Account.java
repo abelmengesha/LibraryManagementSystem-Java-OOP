@@ -1,6 +1,4 @@
-public class Account {
-    import library.abstract.Account;
-
+import library.abstract.Account;
 public class User extends Account {
     private String role;
 
@@ -20,5 +18,5 @@ public class User extends Account {
 
     public void setRole(String role) {
         this.role = role;
-}
+    }
 }

@@ -12,7 +12,6 @@ public class Student extends User {
      public String getDepartment() {
         return Department;
     }
-
     public void setDepartment(String Department) {
         this.Department = Department;
     }
