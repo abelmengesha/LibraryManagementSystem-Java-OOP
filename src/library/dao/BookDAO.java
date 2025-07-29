@@ -15,7 +15,7 @@ public class BookDAO {
                 stmt.setString(1, book.getTitle());
                 stmt.setString(2, book.getAuthor());
                 stmt.setString(3, book.getIsbn());
-                stmt.setInt(4, book.isAvailable());
+                stmt.setBoolean(4, book.isAvailable());
 
                 return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -31,7 +31,7 @@ public class BookDAO {
 
         try (Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.excute.excuteQuery(sql)) {
+            ResultSet rs = stmt.executeQuery(sql)) {
           while (rs.next()){
             Book book = new Book(
                 rs.getInt("id"),
@@ -40,7 +40,7 @@ public class BookDAO {
                 rs.getString("isbn"),
                 rs.getBoolean("available")
             );
-            book.add(book);
+            books.add(book);
           }
 
         }catch (SQLException e){
@@ -66,7 +66,7 @@ public class BookDAO {
 
     public boolean deleteBook(int id){
         String sql = "DELETE FROM books WHERE id = ?";
-        try (Connection conn = DriverManager.getConnection(url));
+        try (Connection conn = DriverManager.getConnection(url);
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setInt(1, id);

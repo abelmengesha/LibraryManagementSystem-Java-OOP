@@ -1,4 +1,4 @@
-package library.ui;
+package library.Ui;
 
 import library.model.BorrowRecord;
 import library.model.User;

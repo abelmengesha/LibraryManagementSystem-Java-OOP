@@ -1,4 +1,4 @@
-package library.ui;
+package library.Ui;
 
 import javax.swing.*;
 import library.util.DBInitializer; // If you created this

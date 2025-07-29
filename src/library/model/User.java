@@ -19,11 +19,11 @@ return name;
 public String email(){
     return email;
 }
-    public String getrole(){
+    public String getRole(){
     return role;
 }
 public void setId(int d){
-    this.id=id;
+    this.id  =  id;
 }
 public void  setName(String name){
 this.name=name;

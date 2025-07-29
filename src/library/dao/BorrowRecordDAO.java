@@ -16,8 +16,8 @@ public class BorrowRecordDAO {
         try (Connection conn = DriverManager.getConnection(url);
             PreparedStatement stmt = conn.prepareStatement(sql)){
 
-                stmt.setInt(1, userId);
-                stmt.setInt(2, bookId);
+                stmt.setInt(1, userID);
+                stmt.setInt(2, bookID);
                 stmt.setString(3, LocalDate.now().toString());
 
                 return stmt.executeUpdate() > 0;
@@ -48,7 +48,7 @@ public class BorrowRecordDAO {
         List<BorrowRecord> list = new ArrayList<>();
         String sql = "SELECT * FROM borrow_records WHERE user_id = ? AND is_returned = 0";
 
-        try (Connection conn = DriverManager.getConnection(url));
+        try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement stmt = conn.prepareStatement(sql)){
 
                 stmt.setInt(1, userId);
@@ -57,7 +57,7 @@ public class BorrowRecordDAO {
                 while (rs.next()){
                     BorrowRecord record = new BorrowRecord(
                         rs.getInt("id"),
-                        rs.agentInt("user_id"),
+                        rs.getInt("user_id"),
                         rs.getInt("book_id"),
                         rs.getDate("borrow_date").toLocalDate(),
                         null,
