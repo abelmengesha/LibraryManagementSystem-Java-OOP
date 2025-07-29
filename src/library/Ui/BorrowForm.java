@@ -1,7 +1,7 @@
 package library.Ui;
 
-import library.model.Book;
-import library.model.User;
+import library.models.Book;
+import library.models.User;
 import library.service.BookService;
 import library.service.BorrowService;
 import library.service.UserService;

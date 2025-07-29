@@ -1,7 +1,7 @@
 package library.service;
 
 import library.dao.UserDAO;
-import library.model.User;
+import library.models.User;
 import library.util.FileLogger;
 
 import java.util.List;

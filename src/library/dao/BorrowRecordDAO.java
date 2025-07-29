@@ -1,6 +1,6 @@
 package library.dao;
 
-import library.model.BorrowRecord;
+import library.models.BorrowRecord;
 
 import java.sql.*;
 import java.time.LocalDate;

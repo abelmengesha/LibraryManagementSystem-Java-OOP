@@ -1,16 +1,18 @@
 package library.service;
 
 import library.dao.BookDAO;
-import library.model.Book;
+import library.models.Book;
 import library.util.FileLogger;
 
 import java.util.List;
 
 public class BookService {
+
     private final BookDAO bookDAO = new BookDAO();
 
     public boolean addBook(String title, String author, String isbn) {
-        if (title.isEmpty()  author.isEmpty()  isbn.isEmpty()) {
+        if (title == null || author == null || isbn == null ||
+            title.trim().isEmpty() || author.trim().isEmpty() || isbn.trim().isEmpty()) {
             return false;
         }
 
@@ -18,7 +20,7 @@ public class BookService {
         boolean result = bookDAO.addBook(book);
 
         if (result) {
-            FileLogger.log("Book added: " + book.getTitle());
+            FileLogger.log("Book added: " + title + " by " + author);
         }
 
         return result;
@@ -28,19 +30,23 @@ public class BookService {
         return bookDAO.getAllBooks();
     }
 
-    public boolean updateAvailability(int bookId, boolean available) {
-        boolean result = bookDAO.updateBookAvailability(bookId, available);
-        if (result) {
-            FileLogger.log("Book ID " + bookId + " availability set to " + available);
-        }
-        return result;
-    }
-
     public Book getBookById(int id) {
         return bookDAO.getBookById(id);
     }
 
-    public boolean deleteBook(int id) {
-        return bookDAO.deleteBook(id);
+    public boolean deleteBook(int bookId) {
+        boolean result = bookDAO.deleteBook(bookId);
+        if (result) {
+            FileLogger.log("Book deleted. ID: " + bookId);
+        }
+        return result;
+    }
+
+    public boolean updateAvailability(int bookId, boolean available) {
+        boolean result = bookDAO.updateBookAvailability(bookId, available);
+        if (result) {
+            FileLogger.log("Book availability updated. ID: " + bookId + ", Available: " + available);
+        }
+        return result;
     }
 }

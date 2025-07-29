@@ -1,8 +1,8 @@
 package library.dao;
 
-import library.model.User;
-import library.model.Student;
-import library.model.Librarian;
+import library.models.User;
+import library.models.Student;
+import library.models.Librarian;
 
 import java.sql.*;
 import java.util.ArrayList;

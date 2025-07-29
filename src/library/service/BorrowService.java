@@ -1,10 +1,7 @@
 package library.service;
 
-public class BorrowService {
-    package library.service;
-
 import library.dao.BorrowRecordDAO;
-import library.model.BorrowRecord;
+import library.models.BorrowRecord;
 import library.util.FileLogger;
 
 import java.util.List;
@@ -35,5 +32,4 @@ public class BorrowService {
     public List<BorrowRecord> getAllRecords() {
         return borrowDAO.getAllBorrowRecords();
     }
-}
 }

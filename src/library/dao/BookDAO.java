@@ -1,5 +1,5 @@
 package library.dao;
-import library.model.Book;
+import library.models.Book;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +46,32 @@ public class BookDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return null;
+        return books;
     }
+    public Book getBookById(int id) {
+    String sql = "SELECT * FROM books WHERE id = ?";
+    try (Connection conn = DriverManager.getConnection(url);
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return new Book(
+                rs.getInt("id"),
+                rs.getString("title"),
+                rs.getString("author"),
+                rs.getString("isbn"),
+                rs.getBoolean("available")
+            );
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
 
     public boolean updateBookAvailability(int id, boolean available){
         String sql = "UPDATE books SET available = ? WHERE id = ?";

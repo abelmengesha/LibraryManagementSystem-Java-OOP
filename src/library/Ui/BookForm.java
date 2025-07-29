@@ -1,6 +1,6 @@
 package library.Ui;
 
-import library.model.Book;
+import library.models.Book;
 import library.service.BookService;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class BookForm extends JFrame {
 
     public BookForm() {
         setTitle("Book Management");
-        setSize(600, 400);
+        setSize(700, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -41,29 +41,29 @@ public class BookForm extends JFrame {
         bookTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(bookTable);
 
-        // Refresh books table
+        // Load existing books
         loadBooks();
 
-        // Add book on button click
+        // Button Action
         addBtn.addActionListener((ActionEvent e) -> {
-            String title = titleField.getText();
-            String author = authorField.getText();
-            String isbn = isbnField.getText();
+            String title = titleField.getText().trim();
+            String author = authorField.getText().trim();
+            String isbn = isbnField.getText().trim();
 
-            if (title.isEmpty()  author.isEmpty()  isbn.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "All fields are required");
+            if (title.isEmpty() || author.isEmpty() || isbn.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "All fields are required", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             boolean success = bookService.addBook(title, author, isbn);
             if (success) {
-                JOptionPane.showMessageDialog(this, "Book added!");
-                loadBooks();
+                JOptionPane.showMessageDialog(this, "Book added successfully");
                 titleField.setText("");
                 authorField.setText("");
                 isbnField.setText("");
+                loadBooks(); // Refresh table
             } else {
-                JOptionPane.showMessageDialog(this, "Failed to add book");
+                JOptionPane.showMessageDialog(this, "Failed to add book", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -72,12 +72,14 @@ public class BookForm extends JFrame {
     }
 
     private void loadBooks() {
-        tableModel.setRowCount(0);
+        tableModel.setRowCount(0); // Clear existing rows
         List<Book> books = bookService.getAllBooks();
-        for (Book b : books) {
-            tableModel.addRow(new Object[]{
-                b.getId(), b.getTitle(), b.getAuthor(), b.getIsbn(), b.isAvailable() ? "Yes" : "No"
-            });
+        if (books != null) {
+            for (Book b : books) {
+                tableModel.addRow(new Object[]{
+                    b.getId(), b.getTitle(), b.getAuthor(), b.getIsbn(), b.isAvailable() ? "Yes" : "No"
+                });
+            }
         }
     }
 }
