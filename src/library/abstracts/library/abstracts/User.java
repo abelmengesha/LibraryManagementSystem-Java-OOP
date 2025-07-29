@@ -1,4 +1,5 @@
-import library.abstract.Account;
+package library.abstracts;
+import library.abstracts.Account;
 public class User extends Account {
     private String role;
 
