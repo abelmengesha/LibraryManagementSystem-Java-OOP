@@ -31,7 +31,6 @@ public class BorrowForm extends JFrame {
         bookComboBox = new JComboBox<>();
         JButton borrowBtn = new JButton("Borrow");
 
-        // Load data into dropdowns
         loadUsers();
         loadBooks();
 
@@ -59,7 +58,7 @@ public class BorrowForm extends JFrame {
             if (borrowed) {
                 bookService.updateAvailability(selectedBook.getId(), false);
                 JOptionPane.showMessageDialog(this, "Book borrowed successfully");
-                loadBooks(); // refresh list
+                loadBooks(); 
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to borrow book");
             }

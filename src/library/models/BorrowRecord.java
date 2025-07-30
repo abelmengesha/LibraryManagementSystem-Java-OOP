@@ -23,7 +23,6 @@ public class BorrowRecord {
         this(-1, userId, bookId, LocalDate.now(), null, false);
     }
 
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

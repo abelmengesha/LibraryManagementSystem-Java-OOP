@@ -15,7 +15,6 @@ public abstract class Account {
         this(-1, name, email);
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }
@@ -33,8 +32,6 @@ public abstract class Account {
     }
 
     public void setEmail(String email) { this.email = email; }
-
-    // Abstract method to be implemented by subclasses
     public abstract String getRole();
 
     @Override

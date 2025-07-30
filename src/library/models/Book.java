@@ -18,8 +18,6 @@ public class Book {
     public Book(String title, String author, String isbn) {
         this(-1, title, author, isbn, true);
     }
-
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

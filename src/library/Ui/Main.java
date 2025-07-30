@@ -1,7 +1,7 @@
 package library.Ui;
 
 import javax.swing.*;
-import library.util.DBInitializer; // If you created this
+import library.util.DBInitializer; 
 
 public class Main {
     public static void main(String[] args) {

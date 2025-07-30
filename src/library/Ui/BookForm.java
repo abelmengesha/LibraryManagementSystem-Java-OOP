@@ -21,7 +21,6 @@ public class BookForm extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Top input fields
         JTextField titleField = new JTextField(10);
         JTextField authorField = new JTextField(10);
         JTextField isbnField = new JTextField(10);
@@ -36,15 +35,15 @@ public class BookForm extends JFrame {
         inputPanel.add(isbnField);
         inputPanel.add(addBtn);
 
-        // Table to display books
+
         tableModel = new DefaultTableModel(new String[]{"ID", "Title", "Author", "ISBN", "Available"}, 0);
         bookTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(bookTable);
 
-        // Load existing books
+        
         loadBooks();
 
-        // Button Action
+    
         addBtn.addActionListener((ActionEvent e) -> {
             String title = titleField.getText().trim();
             String author = authorField.getText().trim();
@@ -61,7 +60,7 @@ public class BookForm extends JFrame {
                 titleField.setText("");
                 authorField.setText("");
                 isbnField.setText("");
-                loadBooks(); // Refresh table
+                loadBooks(); 
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to add book", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -72,7 +71,7 @@ public class BookForm extends JFrame {
     }
 
     private void loadBooks() {
-        tableModel.setRowCount(0); // Clear existing rows
+        tableModel.setRowCount(0); 
         List<Book> books = bookService.getAllBooks();
         if (books != null) {
             for (Book b : books) {

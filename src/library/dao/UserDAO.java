@@ -12,7 +12,6 @@ public class UserDAO {
 
     private final String url = "jdbc:sqlite:db/library.db";
 
-    // ADD a user (Student or Librarian)
     public boolean addUser(User user) {
         String sql = "INSERT INTO users (name, email, role) VALUES (?, ?, ?)";
 
@@ -30,7 +29,6 @@ public class UserDAO {
         }
     }
 
-    // GET all users
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users";
@@ -59,7 +57,6 @@ public class UserDAO {
         return users;
     }
 
-    // GET user by email
     public User getUserByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
 
@@ -89,7 +86,6 @@ public class UserDAO {
         return null;
     }
 
-    // DELETE user by ID
     public boolean deleteUser(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
 

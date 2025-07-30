@@ -5,7 +5,6 @@ import library.models.User;
 import library.service.BorrowService;
 import library.service.UserService;
 import library.service.BookService;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -39,7 +38,6 @@ public class ReturnForm extends JFrame {
 
         loadUsers();
 
-        // Load records when a user is selected
         userComboBox.addActionListener(e -> loadBorrowedBooks());
 
         returnBtn.addActionListener((ActionEvent e) -> {
