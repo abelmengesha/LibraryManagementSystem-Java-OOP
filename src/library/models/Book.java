@@ -1,6 +1,8 @@
 package library.models;
 
-public class Book {
+import library.interfaces.Loggable;
+
+public class Book implements Loggable {
     private int id;
     private String title;
     private String author;
@@ -36,5 +38,9 @@ public class Book {
     @Override
     public String toString() {
         return title + " by " + author + (available ? " [Available]" : " [Not Available]");
+    }
+     @Override
+    public String getLogMessage() {
+       return "User " + getId() + " (" + getAuthor() + getTitle() + ")";
     }
 }

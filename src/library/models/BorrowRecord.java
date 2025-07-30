@@ -1,8 +1,10 @@
 package library.models;
 
 import java.time.LocalDate;
+import library.interfaces.Loggable;
 
-public class BorrowRecord {
+
+public class BorrowRecord implements Loggable {
     private int id;
     private int userId;
     private int bookId;
@@ -46,4 +48,10 @@ public class BorrowRecord {
         return "Record ID: " + id + ", Book ID: " + bookId + ", User ID: " + userId + ", Borrowed: " + borrowDate +
                 (isReturned ? ", Returned: " + returnDate : ", Not yet returned");
     }
+    @Override
+    public String getLogMessage() {
+       return "User " + getUserId() + " (" + getBookId() + getBorrowDate() + ")";
+    }
+
+
 }
