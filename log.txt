@@ -1,0 +1,4 @@
+[2025-07-30T14:16:53.053167900]Book added: The Silent Echo by Emily R. Carter
+[2025-07-30T14:53:41.506003300]Book added: The Silent Echo by Emily R. Carter
+[2025-07-30T15:11:35.953439]User ID 3 borrowed Book ID 1
+[2025-07-30T15:11:35.961953600]Book availability updated. ID: 1, Available: false
