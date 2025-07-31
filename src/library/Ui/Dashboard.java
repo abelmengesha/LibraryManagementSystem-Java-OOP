@@ -7,7 +7,7 @@ import java.awt.event.*;
 public class Dashboard extends JFrame {
 
     public Dashboard(String username) {
-        setTitle("Library Dashboard");
+        setTitle("Library Dashboard - " + username);
         setSize(600, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -22,14 +22,32 @@ public class Dashboard extends JFrame {
         JButton viewBooksBtn = createStyledButton("📚 View Books");
         JButton issueBookBtn = createStyledButton("📖 Issue Book");
         JButton returnBookBtn = createStyledButton("🔄 Return Book");
+        JButton registerUserBtn = createStyledButton("👤 Register User");
         JButton logoutBtn = createStyledButton("🚪 Logout");
 
-        logoutBtn.setBackground(new Color(220, 53, 69)); // red
+        logoutBtn.setBackground(new Color(220, 53, 69));
         logoutBtn.setForeground(Color.WHITE);
 
+        // Button actions
+        viewBooksBtn.addActionListener(e -> {
+            new BookForm().setVisible(true);
+        });
+
+        issueBookBtn.addActionListener(e -> {
+            new BorrowForm().setVisible(true);
+        });
+
+        returnBookBtn.addActionListener(e -> {
+            new ReturnForm().setVisible(true);
+        });
+
+        registerUserBtn.addActionListener(e -> {
+            new RegistrationForm().setVisible(true);
+        });
+
         logoutBtn.addActionListener(e -> {
-            dispose(); // close current window
-            new LoginWindow(); // show login again
+            dispose();
+            new LoginWindow().setVisible(true);
         });
 
         JPanel mainPanel = new JPanel();
@@ -44,11 +62,12 @@ public class Dashboard extends JFrame {
         mainPanel.add(issueBookBtn);
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(returnBookBtn);
+        mainPanel.add(Box.createVerticalStrut(15));
+        mainPanel.add(registerUserBtn);
         mainPanel.add(Box.createVerticalStrut(25));
         mainPanel.add(logoutBtn);
 
         add(mainPanel);
-        setVisible(true);
     }
 
     private JButton createStyledButton(String text) {
@@ -74,6 +93,6 @@ public class Dashboard extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Dashboard("Admin");
+        SwingUtilities.invokeLater(() -> new Dashboard("Admin").setVisible(true));
     }
 }

@@ -8,7 +8,7 @@ public class LoginWindow extends JFrame {
 
     public LoginWindow() {
         setTitle("Library Login");
-        setSize(450, 350);
+        setSize(450, 400); // Increased height to accommodate new button
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -83,6 +83,15 @@ public class LoginWindow extends JFrame {
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Registration button
+        JButton registerButton = new JButton("Create New Account");
+        registerButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        registerButton.setForeground(new Color(0, 150, 199));
+        registerButton.setContentAreaFilled(false);
+        registerButton.setBorderPainted(false);
+        registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         // Hover effects
         loginButton.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent evt) {
@@ -93,6 +102,35 @@ public class LoginWindow extends JFrame {
             }
         });
 
+        registerButton.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent evt) {
+                registerButton.setForeground(new Color(0, 100, 150));
+            }
+            public void mouseExited(MouseEvent evt) {
+                registerButton.setForeground(new Color(0, 150, 199));
+            }
+        });
+
+        // Login action
+        loginButton.addActionListener(e -> {
+            String username = userField.getText();
+            char[] password = passField.getPassword();
+            
+            if (!username.isEmpty() && password.length > 0) {
+                dispose();
+                new Dashboard(username).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please enter both username and password", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        // Registration action
+        registerButton.addActionListener(e -> {
+            dispose();
+            new RegistrationForm().setVisible(true);
+        });
+
         // Add components to card
         cardPanel.add(titleLabel);
         cardPanel.add(Box.createVerticalStrut(15));
@@ -101,14 +139,15 @@ public class LoginWindow extends JFrame {
         cardPanel.add(passPanel);
         cardPanel.add(Box.createVerticalStrut(20));
         cardPanel.add(loginButton);
+        cardPanel.add(Box.createVerticalStrut(10));
+        cardPanel.add(registerButton);
 
         // Add card to main panel
         mainPanel.add(cardPanel);
         add(mainPanel);
-        setVisible(true);
     }
 
     public static void main(String[] args) {
-        new LoginWindow();
+        SwingUtilities.invokeLater(() -> new LoginWindow().setVisible(true));
     }
 }
