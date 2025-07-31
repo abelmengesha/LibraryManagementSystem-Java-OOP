@@ -1,87 +1,102 @@
 package library.Ui;
 
-import library.models.Book;
-import library.models.User;
-import library.service.BookService;
-import library.service.BorrowService;
-import library.service.UserService;
-
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.util.List;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class BorrowForm extends JFrame {
-
-    private final UserService userService = new UserService();
-    private final BookService bookService = new BookService();
-    private final BorrowService borrowService = new BorrowService();
-
-    private JComboBox<User> userComboBox;
-    private JComboBox<Book> bookComboBox;
+    private JTextField memberField, bookField, dateField;
+    private JButton borrowButton, cancelButton;
 
     public BorrowForm() {
-        setTitle("Borrow Book");
-        setSize(400, 250);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setTitle("Borrow Book Form");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(420, 330);
         setLocationRelativeTo(null);
+        setResizable(false);
+
+        Color primaryColor = new Color(33, 150, 243); // Light blue
+        Color backgroundColor = new Color(232, 245, 253);
+        Color borderColor = new Color(100, 181, 246);
 
         JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        panel.setLayout(new BorderLayout(10, 10));
+        panel.setBackground(backgroundColor);
 
-        userComboBox = new JComboBox<>();
-        bookComboBox = new JComboBox<>();
-        JButton borrowBtn = new JButton("Borrow");
+        JLabel headerLabel = new JLabel("📖 Borrow a Book");
+        headerLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+        headerLabel.setForeground(primaryColor);
+        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        loadUsers();
-        loadBooks();
+        JPanel formPanel = new JPanel();
+        formPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(borderColor, 2),
+                "Borrow Details", TitledBorder.LEFT, TitledBorder.TOP, new Font("SansSerif", Font.BOLD, 14), primaryColor));
+        formPanel.setLayout(new GridBagLayout());
+        formPanel.setBackground(Color.WHITE);
 
-        panel.add(new JLabel("Select User:"));
-        panel.add(userComboBox);
-        panel.add(new JLabel("Select Book:"));
-        panel.add(bookComboBox);
-        panel.add(borrowBtn);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        borrowBtn.addActionListener((ActionEvent e) -> {
-            User selectedUser = (User) userComboBox.getSelectedItem();
-            Book selectedBook = (Book) bookComboBox.getSelectedItem();
+        JLabel memberLabel = new JLabel("Member Name:");
+        memberField = new JTextField(20);
 
-            if (selectedUser == null || selectedBook == null) {
-                JOptionPane.showMessageDialog(this, "Select a user and a book");
-                return;
-            }
+        JLabel bookLabel = new JLabel("Book Title:");
+        bookField = new JTextField(20);
 
-            if (!selectedBook.isAvailable()) {
-                JOptionPane.showMessageDialog(this, "Book is not available");
-                return;
-            }
+        JLabel dateLabel = new JLabel("Borrow Date:");
+        dateField = new JTextField(20);
 
-            boolean borrowed = borrowService.borrowBook(selectedUser.getId(), selectedBook.getId());
-            if (borrowed) {
-                bookService.updateAvailability(selectedBook.getId(), false);
-                JOptionPane.showMessageDialog(this, "Book borrowed successfully");
-                loadBooks(); 
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to borrow book");
-            }
-        });
+        Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+        memberLabel.setFont(labelFont);
+        bookLabel.setFont(labelFont);
+        dateLabel.setFont(labelFont);
+
+        gbc.gridx = 0; gbc.gridy = 0;
+        formPanel.add(memberLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(memberField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1;
+        formPanel.add(bookLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(bookField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2;
+        formPanel.add(dateLabel, gbc);
+        gbc.gridx = 1;
+        formPanel.add(dateField, gbc);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(backgroundColor);
+
+        borrowButton = new JButton("📅 Borrow");
+        cancelButton = new JButton("❌ Cancel");
+
+        borrowButton.setFont(new Font("SansSerif", Font.BOLD, 14));
+        borrowButton.setBackground(primaryColor);
+        borrowButton.setForeground(Color.WHITE);
+        borrowButton.setFocusPainted(false);
+
+        cancelButton.setFont(new Font("SansSerif", Font.BOLD, 14));
+        cancelButton.setBackground(new Color(244, 67, 54));
+        cancelButton.setForeground(Color.WHITE);
+        cancelButton.setFocusPainted(false);
+
+        buttonPanel.add(borrowButton);
+        buttonPanel.add(cancelButton);
+
+        panel.add(headerLabel, BorderLayout.NORTH);
+        panel.add(formPanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
         add(panel);
     }
 
-    private void loadUsers() {
-        userComboBox.removeAllItems();
-        List<User> users = userService.getAllUsers();
-        for (User u : users) {
-            userComboBox.addItem(u);
-        }
-    }
-
-    private void loadBooks() {
-        bookComboBox.removeAllItems();
-        List<Book> books = bookService.getAllBooks();
-        for (Book b : books) {
-            if (b.isAvailable()) {
-                bookComboBox.addItem(b);
-            }
-        }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new BorrowForm().setVisible(true);
+        });
     }
 }
