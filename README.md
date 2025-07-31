@@ -31,12 +31,12 @@ principles and GUI(Swing) for graphical interface and SQLite for database manage
 
 #  How to Run the program
 
+- Run the Main.java file found in src/library/Ui/Main.java
+
 # Requirements
 
 - Java JDK have to be installed
 - SQLite JDBC driver (`sqlite-jdbc-3.42.0.0.jar`)
-
-- Run the Main.java file found in src/library/Ui/Main.java
 
 # Github username
 
