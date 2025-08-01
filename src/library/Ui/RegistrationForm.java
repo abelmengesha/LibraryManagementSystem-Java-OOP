@@ -1,102 +1,96 @@
 package library.Ui;
+
+import library.service.UserService;
+
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class RegistrationForm extends JFrame {
-    private JTextField nameField, emailField, phoneField;
-    private JButton registerButton, cancelButton;
+
+    private final UserService userService = new UserService();
 
     public RegistrationForm() {
-        setTitle("User Registration Form");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(420, 330);
+        setTitle("Register User");
+        setSize(450, 300); // increased size
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        Color primaryColor = new Color(33, 150, 243); // Light blue
-        Color backgroundColor = new Color(232, 245, 253);
-        Color borderColor = new Color(100, 181, 246);
-
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        panel.setLayout(new BorderLayout(10, 10));
-        panel.setBackground(backgroundColor);
-
-        JLabel headerLabel = new JLabel("📝 Register New User");
-        headerLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
-        headerLabel.setForeground(primaryColor);
-        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JPanel formPanel = new JPanel();
-        formPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(borderColor, 2),
-                "User Details", TitledBorder.LEFT, TitledBorder.TOP, new Font("SansSerif", Font.BOLD, 14), primaryColor));
-        formPanel.setLayout(new GridBagLayout());
-        formPanel.setBackground(Color.WHITE);
-
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(240, 240, 240));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(15, 15, 15, 15);
+        gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel nameLabel = new JLabel("Name:");
-        nameField = new JTextField(20);
+        JTextField nameField = new JTextField(20);
+        JTextField emailField = new JTextField(20);
+        String[] roles = {"Student", "Librarian"};
+        JComboBox<String> roleCombo = new JComboBox<>(roles);
 
-        JLabel emailLabel = new JLabel("Email:");
-        emailField = new JTextField(20);
+        JButton registerBtn = new JButton("Register");
+        registerBtn.setBackground(new Color(0, 123, 255));
+        registerBtn.setForeground(Color.WHITE);
+        registerBtn.setFocusPainted(false);
+        registerBtn.setPreferredSize(new Dimension(120, 40));
 
-        JLabel phoneLabel = new JLabel("Phone:");
-        phoneField = new JTextField(20);
+        // Name Label and Field
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Name:"), gbc);
 
-        Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
-        nameLabel.setFont(labelFont);
-        emailLabel.setFont(labelFont);
-        phoneLabel.setFont(labelFont);
-
-        gbc.gridx = 0; gbc.gridy = 0;
-        formPanel.add(nameLabel, gbc);
         gbc.gridx = 1;
-        formPanel.add(nameField, gbc);
+        panel.add(nameField, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1;
-        formPanel.add(emailLabel, gbc);
+        // Email Label and Field
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel("Email:"), gbc);
+
         gbc.gridx = 1;
-        formPanel.add(emailField, gbc);
+        panel.add(emailField, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2;
-        formPanel.add(phoneLabel, gbc);
+        // Role Label and ComboBox
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(new JLabel("Role:"), gbc);
+
         gbc.gridx = 1;
-        formPanel.add(phoneField, gbc);
+        panel.add(roleCombo, gbc);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(backgroundColor);
+        // Register Button
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panel.add(registerBtn, gbc);
 
-        registerButton = new JButton("✅ Register");
-        cancelButton = new JButton("❌ Cancel");
+        registerBtn.addActionListener((ActionEvent e) -> {
+            String name = nameField.getText().trim();
+            String email = emailField.getText().trim();
+            String role = ((String) roleCombo.getSelectedItem()).trim();
 
-        registerButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-        registerButton.setBackground(primaryColor);
-        registerButton.setForeground(Color.WHITE);
-        registerButton.setFocusPainted(false);
+            // Normalize role string to match DB CHECK constraint
+            if (role.equalsIgnoreCase("student")) {
+                role = "Student";
+            } else if (role.equalsIgnoreCase("librarian")) {
+                role = "Librarian";
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid role selected.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-        cancelButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-        cancelButton.setBackground(new Color(244, 67, 54));
-        cancelButton.setForeground(Color.WHITE);
-        cancelButton.setFocusPainted(false);
-
-        buttonPanel.add(registerButton);
-        buttonPanel.add(cancelButton);
-
-        panel.add(headerLabel, BorderLayout.NORTH);
-        panel.add(formPanel, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
+            boolean result = userService.registerUser(name, email, role);
+            if (result) {
+                JOptionPane.showMessageDialog(this, "User registered successfully!");
+                nameField.setText("");
+                emailField.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Registration failed. Please check your input.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         add(panel);
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new RegistrationForm().setVisible(true);
-        });
-    }
 }
-

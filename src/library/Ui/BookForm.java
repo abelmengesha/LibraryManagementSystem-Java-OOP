@@ -1,102 +1,124 @@
 package library.Ui;
 
+import library.models.Book;
+import library.service.BookService;
+
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class BookForm extends JFrame {
-    private JTextField titleField, authorField, isbnField;
-    private JButton saveButton, cancelButton;
+
+    private final BookService bookService = new BookService();
+    private JTable bookTable;
+    private DefaultTableModel tableModel;
 
     public BookForm() {
-        setTitle("Book Registration Form");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(420, 330);
+        setTitle("Book Management");
+        setSize(750, 450); // increased size
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        Color primaryColor = new Color(33, 150, 243); // Light blue
-        Color backgroundColor = new Color(232, 245, 253);
-        Color borderColor = new Color(100, 181, 246);
+        // Input fields with bigger columns for easier typing
+        JTextField titleField = new JTextField(15);
+        JTextField authorField = new JTextField(15);
+        JTextField isbnField = new JTextField(15);
 
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        panel.setLayout(new BorderLayout(10, 10));
-        panel.setBackground(backgroundColor);
+        JButton addBtn = new JButton("Add Book");
 
-        JLabel headerLabel = new JLabel("📚 Register a New Book");
-        headerLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
-        headerLabel.setForeground(primaryColor);
-        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        // Styling the add button
+        addBtn.setBackground(new Color(0, 123, 255));
+        addBtn.setForeground(Color.WHITE);
+        addBtn.setFocusPainted(false);
+        addBtn.setPreferredSize(new Dimension(120, 35));
 
-        JPanel formPanel = new JPanel();
-        formPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(borderColor, 2),
-                "Book Details", TitledBorder.LEFT, TitledBorder.TOP, new Font("SansSerif", Font.BOLD, 14), primaryColor));
-        formPanel.setLayout(new GridBagLayout());
-        formPanel.setBackground(Color.WHITE);
-
+        // Input panel with light background and padding
+        JPanel inputPanel = new JPanel(new GridBagLayout());
+        inputPanel.setBackground(new Color(240, 240, 240));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
 
-        JLabel titleLabel = new JLabel("Title:");
-        titleField = new JTextField(20);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        inputPanel.add(new JLabel("Title:"), gbc);
 
-        JLabel authorLabel = new JLabel("Author:");
-        authorField = new JTextField(20);
-
-        JLabel isbnLabel = new JLabel("ISBN:");
-        isbnField = new JTextField(20);
-
-        Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
-        titleLabel.setFont(labelFont);
-        authorLabel.setFont(labelFont);
-        isbnLabel.setFont(labelFont);
-
-        gbc.gridx = 0; gbc.gridy = 0;
-        formPanel.add(titleLabel, gbc);
         gbc.gridx = 1;
-        formPanel.add(titleField, gbc);
+        inputPanel.add(titleField, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 1;
-        formPanel.add(authorLabel, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        inputPanel.add(new JLabel("Author:"), gbc);
+
         gbc.gridx = 1;
-        formPanel.add(authorField, gbc);
+        inputPanel.add(authorField, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2;
-        formPanel.add(isbnLabel, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        inputPanel.add(new JLabel("ISBN:"), gbc);
+
         gbc.gridx = 1;
-        formPanel.add(isbnField, gbc);
+        inputPanel.add(isbnField, gbc);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(backgroundColor);
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        gbc.gridheight = 2;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        inputPanel.add(addBtn, gbc);
 
-        saveButton = new JButton("💾 Save");
-        cancelButton = new JButton("❌ Cancel");
+        // Table setup with scroll pane
+        tableModel = new DefaultTableModel(new String[]{"ID", "Title", "Author", "ISBN", "Available"}, 0) {
+            // Make table cells non-editable
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        bookTable = new JTable(tableModel);
+        bookTable.setFillsViewportHeight(true);
+        JScrollPane scrollPane = new JScrollPane(bookTable);
 
-        saveButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-        saveButton.setBackground(primaryColor);
-        saveButton.setForeground(Color.WHITE);
-        saveButton.setFocusPainted(false);
+        loadBooks();
 
-        cancelButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-        cancelButton.setBackground(new Color(244, 67, 54));
-        cancelButton.setForeground(Color.WHITE);
-        cancelButton.setFocusPainted(false);
+        // Add button action
+        addBtn.addActionListener((ActionEvent e) -> {
+            String title = titleField.getText().trim();
+            String author = authorField.getText().trim();
+            String isbn = isbnField.getText().trim();
 
-        buttonPanel.add(saveButton);
-        buttonPanel.add(cancelButton);
+            if (title.isEmpty() || author.isEmpty() || isbn.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "All fields are required", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-        panel.add(headerLabel, BorderLayout.NORTH);
-        panel.add(formPanel, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
+            boolean success = bookService.addBook(title, author, isbn);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Book added successfully");
+                titleField.setText("");
+                authorField.setText("");
+                isbnField.setText("");
+                loadBooks();
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to add book", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
-        add(panel);
+        add(inputPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new BookForm().setVisible(true);
-        });
+    private void loadBooks() {
+        tableModel.setRowCount(0);
+        List<Book> books = bookService.getAllBooks();
+        if (books != null) {
+            for (Book b : books) {
+                tableModel.addRow(new Object[]{
+                        b.getId(), b.getTitle(), b.getAuthor(), b.getIsbn(), b.isAvailable() ? "Yes" : "No"
+                });
+            }
+        }
     }
 }

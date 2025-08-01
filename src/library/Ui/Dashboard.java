@@ -2,97 +2,73 @@ package library.Ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class Dashboard extends JFrame {
 
-    public Dashboard(String username) {
-        setTitle("Library Dashboard - " + username);
-        setSize(600, 400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    public Dashboard(String role) {
+        setTitle(role + " Dashboard");
+        setSize(500, 350);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
 
-        Font headerFont = new Font("SansSerif", Font.BOLD, 22);
-        Font labelFont = new Font("SansSerif", Font.PLAIN, 16);
+        JButton registerUserBtn = new JButton("Register User");
+        JButton manageBooksBtn = new JButton("Manage Books");
+        JButton borrowBtn = new JButton("Borrow Book");
+        JButton returnBtn = new JButton("Return Book");
+        JButton exitBtn = new JButton("Exit");
 
-        JLabel welcomeLabel = new JLabel("Welcome, " + username + "!");
-        welcomeLabel.setFont(headerFont);
-        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Color btnBlue = new Color(0, 123, 255);
+        Color btnGreen = new Color(40, 167, 69);
+        Color btnRed = new Color(220, 53, 69);
+        Color btnTextColor = Color.WHITE;
 
-        JButton viewBooksBtn = createStyledButton("📚 View Books");
-        JButton issueBookBtn = createStyledButton("📖 Issue Book");
-        JButton returnBookBtn = createStyledButton("🔄 Return Book");
-        JButton registerUserBtn = createStyledButton("👤 Register User");
-        JButton logoutBtn = createStyledButton("🚪 Logout");
+        JButton[] allButtons = {registerUserBtn, manageBooksBtn, borrowBtn, returnBtn, exitBtn};
+        for (JButton btn : allButtons) {
+            btn.setForeground(btnTextColor);
+            btn.setFocusPainted(false);
+            btn.setPreferredSize(new Dimension(160, 50));
+        }
 
-        logoutBtn.setBackground(new Color(220, 53, 69));
-        logoutBtn.setForeground(Color.WHITE);
+        registerUserBtn.setBackground(btnBlue);
+        manageBooksBtn.setBackground(btnGreen);
+        borrowBtn.setBackground(new Color(0, 153, 204));
+        returnBtn.setBackground(new Color(0, 153, 102));
+        exitBtn.setBackground(btnRed);
 
-        // Button actions
-        viewBooksBtn.addActionListener(e -> {
-            new BookForm().setVisible(true);
-        });
+        registerUserBtn.addActionListener(e -> new RegistrationForm().setVisible(true));
+        manageBooksBtn.addActionListener(e -> new BookForm().setVisible(true));
+        borrowBtn.addActionListener(e -> new BorrowForm().setVisible(true));
+        returnBtn.addActionListener(e -> new ReturnForm().setVisible(true));
+        exitBtn.addActionListener(e -> dispose());
 
-        issueBookBtn.addActionListener(e -> {
-            new BorrowForm().setVisible(true);
-        });
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(240, 240, 240));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, 20, 15, 20);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
-        returnBookBtn.addActionListener(e -> {
-            new ReturnForm().setVisible(true);
-        });
+        if (role.equalsIgnoreCase("Librarian")) {
+            panel.add(registerUserBtn, gbc);
+            gbc.gridx = 1;
+            panel.add(manageBooksBtn, gbc);
+            gbc.gridx = 0;
+            gbc.gridy++;
+            panel.add(borrowBtn, gbc);
+            gbc.gridx = 1;
+            panel.add(returnBtn, gbc);
+        } else {
+            panel.add(borrowBtn, gbc);
+            gbc.gridx = 1;
+            panel.add(returnBtn, gbc);
+        }
 
-        registerUserBtn.addActionListener(e -> {
-            new RegistrationForm().setVisible(true);
-        });
+        gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.gridwidth = 2;
+        panel.add(exitBtn, gbc);
 
-        logoutBtn.addActionListener(e -> {
-            dispose();
-            new LoginWindow().setVisible(true);
-        });
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
-        mainPanel.setBackground(new Color(245, 245, 250));
-
-        mainPanel.add(welcomeLabel);
-        mainPanel.add(Box.createVerticalStrut(30));
-        mainPanel.add(viewBooksBtn);
-        mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(issueBookBtn);
-        mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(returnBookBtn);
-        mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(registerUserBtn);
-        mainPanel.add(Box.createVerticalStrut(25));
-        mainPanel.add(logoutBtn);
-
-        add(mainPanel);
-    }
-
-    private JButton createStyledButton(String text) {
-        JButton button = new JButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        button.setBackground(new Color(0, 123, 255));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setMaximumSize(new Dimension(250, 40));
-
-        button.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                button.setBackground(new Color(30, 144, 255));
-            }
-            public void mouseExited(MouseEvent e) {
-                button.setBackground(new Color(0, 123, 255));
-            }
-        });
-
-        return button;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Dashboard("Admin").setVisible(true));
+        add(panel);
     }
 }
