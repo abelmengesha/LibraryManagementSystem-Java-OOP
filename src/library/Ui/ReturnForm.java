@@ -21,7 +21,7 @@
 
         public ReturnForm() {
             setTitle("Return Book");
-            setSize(500, 300);  // increased size
+            setSize(600, 300);  // increased size
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setLocationRelativeTo(null);
             setResizable(false);
@@ -40,7 +40,7 @@
             returnBtn.setBackground(new Color(220, 53, 69)); // bootstrap red
             returnBtn.setForeground(Color.WHITE);
             returnBtn.setFocusPainted(false);
-            returnBtn.setPreferredSize(new Dimension(120, 40));
+            returnBtn.setPreferredSize(new Dimension(100, 50));
 
             // Add components with labels
             gbc.gridx = 0;
@@ -103,10 +103,9 @@
             if (selectedUser == null) return;
 
             List<BorrowRecord> records = borrowService.getUserActiveBorrows(selectedUser.getId());
-            if(records != null) {
+            
                 for (BorrowRecord r : records) {
                     borrowComboBox.addItem(r);
                 }
-            }
         }
     }

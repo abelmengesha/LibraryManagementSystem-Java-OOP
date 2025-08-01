@@ -12,7 +12,7 @@ public class RegistrationForm extends JFrame {
 
     public RegistrationForm() {
         setTitle("Register User");
-        setSize(450, 300); // increased size
+        setSize(500, 300); // increased size
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);

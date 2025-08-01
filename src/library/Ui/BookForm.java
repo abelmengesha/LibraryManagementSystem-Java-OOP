@@ -17,25 +17,28 @@ public class BookForm extends JFrame {
 
     public BookForm() {
         setTitle("Book Management");
-        setSize(750, 450); // increased size
+        setSize(800, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        // Input fields with bigger columns for easier typing
         JTextField titleField = new JTextField(15);
         JTextField authorField = new JTextField(15);
         JTextField isbnField = new JTextField(15);
 
         JButton addBtn = new JButton("Add Book");
+        JButton deleteBtn = new JButton("Delete Book");
 
-        // Styling the add button
         addBtn.setBackground(new Color(0, 123, 255));
         addBtn.setForeground(Color.WHITE);
         addBtn.setFocusPainted(false);
         addBtn.setPreferredSize(new Dimension(120, 35));
 
-        // Input panel with light background and padding
+        deleteBtn.setBackground(new Color(220, 53, 69));
+        deleteBtn.setForeground(Color.WHITE);
+        deleteBtn.setFocusPainted(false);
+        deleteBtn.setPreferredSize(new Dimension(120, 35));
+
         JPanel inputPanel = new JPanel(new GridBagLayout());
         inputPanel.setBackground(new Color(240, 240, 240));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -65,13 +68,15 @@ public class BookForm extends JFrame {
 
         gbc.gridx = 2;
         gbc.gridy = 1;
-        gbc.gridheight = 2;
+        gbc.gridheight = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
         inputPanel.add(addBtn, gbc);
 
-        // Table setup with scroll pane
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        inputPanel.add(deleteBtn, gbc);
+
         tableModel = new DefaultTableModel(new String[]{"ID", "Title", "Author", "ISBN", "Available"}, 0) {
-            // Make table cells non-editable
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -83,7 +88,6 @@ public class BookForm extends JFrame {
 
         loadBooks();
 
-        // Add button action
         addBtn.addActionListener((ActionEvent e) -> {
             String title = titleField.getText().trim();
             String author = authorField.getText().trim();
@@ -103,6 +107,31 @@ public class BookForm extends JFrame {
                 loadBooks();
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to add book", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        deleteBtn.addActionListener(e -> {
+            int selectedRow = bookTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a book to delete.");
+                return;
+            }
+
+            int bookId = (int) tableModel.getValueAt(selectedRow, 0);
+            String title = (String) tableModel.getValueAt(selectedRow, 1);
+
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to delete the book titled \"" + title + "\"?",
+                    "Confirm Delete", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean success = bookService.deleteBook(bookId);
+                if (success) {
+                    JOptionPane.showMessageDialog(this, "Book deleted successfully.");
+                    loadBooks();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to delete book.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 

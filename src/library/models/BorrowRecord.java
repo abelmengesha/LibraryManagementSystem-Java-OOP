@@ -53,5 +53,8 @@ public class BorrowRecord implements Loggable {
        return "User " + getUserId() + " (" + getBookId() + getBorrowDate() + ")";
     }
 
+   
+
+
 
 }

@@ -44,9 +44,9 @@ public class UserDAO {
                 String email = rs.getString("email");
 
                 if ("Student".equalsIgnoreCase(role)) {
-                    users.add(new Student(id, name, email, "N/A")); // department optional
+                    users.add(new Student(id, name, email, "SWE")); 
                 } else if ("Librarian".equalsIgnoreCase(role)) {
-                    users.add(new Librarian(id, name, email, "N/A")); // staffId optional
+                    users.add(new Librarian(id, name, email, "1011")); 
                 } else {
                     users.add(new User(id, name, email, role));
                 }
@@ -72,9 +72,9 @@ public class UserDAO {
                 String role = rs.getString("role");
 
                 if ("Student".equalsIgnoreCase(role)) {
-                    return new Student(id, name, email, "N/A");
+                    return new Student(id, name, email, "SWE");
                 } else if ("Librarian".equalsIgnoreCase(role)) {
-                    return new Librarian(id, name, email, "N/A");
+                    return new Librarian(id, name, email, "1011");
                 } else {
                     return new User(id, name, email, role);
                 }

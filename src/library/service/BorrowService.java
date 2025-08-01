@@ -25,8 +25,8 @@ public class BorrowService {
         return result;
     }
 
-    public List<BorrowRecord> getUserActiveBorrows(int userId) {
-        return borrowDAO.getActiveBorrowsByUser(userId);
+    public List<BorrowRecord> getUserActiveBorrows(int Id) {
+        return borrowDAO.getActiveBorrowsByUser(Id);
     }
 
     public List<BorrowRecord> getAllRecords() {

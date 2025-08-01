@@ -22,7 +22,7 @@ public class BorrowForm extends JFrame {
 
     public BorrowForm() {
         setTitle("Borrow Book");
-        setSize(500, 300); // slightly bigger window
+        setSize(600, 300); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -41,7 +41,7 @@ public class BorrowForm extends JFrame {
         borrowBtn.setBackground(new Color(0, 123, 255));
         borrowBtn.setForeground(Color.WHITE);
         borrowBtn.setFocusPainted(false);
-        borrowBtn.setPreferredSize(new Dimension(120, 40));
+        borrowBtn.setPreferredSize(new Dimension(100, 50));
 
         // Add components with labels and spacing
         gbc.gridx = 0;

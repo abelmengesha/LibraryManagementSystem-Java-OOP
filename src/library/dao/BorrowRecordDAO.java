@@ -59,7 +59,7 @@ public class BorrowRecordDAO {
                         rs.getInt("id"),
                         rs.getInt("user_id"),
                         rs.getInt("book_id"),
-                        rs.getDate("borrow_date").toLocalDate(),
+                        LocalDate.parse(rs.getString("borrow_date")),
                         null,
                         false
                     );

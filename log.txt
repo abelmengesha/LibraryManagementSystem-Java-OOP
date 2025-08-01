@@ -8,3 +8,25 @@
 [2025-08-01T11:02:38.937189200]Book added: To Kill a Mocking Bird by Harper Lee
 [2025-08-01T11:06:27.490108200]User ID 6 borrowed Book ID 3
 [2025-08-01T11:06:27.496812400]Book availability updated. ID: 3, Available: false
+[2025-08-01T18:58:22.455916700]Book added: Project Hail Mary by Andy Weir
+[2025-08-01T18:58:51.282581100]Book added: Atomic Habits by James Clear
+[2025-08-01T18:59:54.246884600]Book added: *1984* by George Orwell
+[2025-08-01T19:27:34.429225100]User ID 7 borrowed Book ID 5
+[2025-08-01T19:27:34.436743100]Book availability updated. ID: 5, Available: false
+[2025-08-01T19:27:38.233040500]User ID 7 borrowed Book ID 4
+[2025-08-01T19:27:38.237553700]Book availability updated. ID: 4, Available: false
+[2025-08-01T19:27:40.464772100]User ID 7 borrowed Book ID 6
+[2025-08-01T19:27:40.469612100]Book availability updated. ID: 6, Available: false
+[2025-08-01T20:04:12.755212800]Return confirmed for Borrow Record ID: 3
+[2025-08-01T20:04:12.762870700]Book availability updated. ID: 3, Available: true
+[2025-08-01T20:04:16.582235400]Return confirmed for Borrow Record ID: 4
+[2025-08-01T20:04:16.587760100]Book availability updated. ID: 5, Available: true
+[2025-08-01T20:04:20.847063600]Return confirmed for Borrow Record ID: 5
+[2025-08-01T20:04:20.852023100]Book availability updated. ID: 4, Available: true
+[2025-08-01T20:04:22.647637]Return confirmed for Borrow Record ID: 6
+[2025-08-01T20:04:22.652163300]Book availability updated. ID: 6, Available: true
+[2025-08-01T20:04:29.886699900]Return confirmed for Borrow Record ID: 1
+[2025-08-01T20:04:29.893264900]Book availability updated. ID: 1, Available: true
+[2025-08-01T20:08:58.791299]Book deleted. ID: 2
+[2025-08-01T20:16:49.969138400]User ID 2 borrowed Book ID 1
+[2025-08-01T20:16:49.975638100]Book availability updated. ID: 1, Available: false
