@@ -2,3 +2,9 @@
 [2025-07-30T14:53:41.506003300]Book added: The Silent Echo by Emily R. Carter
 [2025-07-30T15:11:35.953439]User ID 3 borrowed Book ID 1
 [2025-07-30T15:11:35.961953600]Book availability updated. ID: 1, Available: false
+[2025-08-01T10:35:12.300956]Book added: dawit by dawit
+[2025-08-01T10:35:41.846236800]User ID 4 borrowed Book ID 2
+[2025-08-01T10:35:41.857151200]Book availability updated. ID: 2, Available: false
+[2025-08-01T11:02:38.937189200]Book added: To Kill a Mocking Bird by Harper Lee
+[2025-08-01T11:06:27.490108200]User ID 6 borrowed Book ID 3
+[2025-08-01T11:06:27.496812400]Book availability updated. ID: 3, Available: false
