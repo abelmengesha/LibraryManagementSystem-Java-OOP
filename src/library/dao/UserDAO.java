@@ -29,7 +29,7 @@ public class UserDAO {
         }
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() { // Used to display in the UI in table list
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users";
 

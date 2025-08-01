@@ -25,7 +25,7 @@ public class BookDAO {
         
     }
 
-    public List<Book> getAllBooks(){
+    public List<Book> getAllBooks(){ // Used to display in the UI in table list
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM books";
 

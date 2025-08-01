@@ -2,97 +2,87 @@ package library.Ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class Dashboard extends JFrame {
 
-    public Dashboard(String username) {
-        setTitle("Library Dashboard - " + username);
-        setSize(600, 400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    public Dashboard(String role) {
+        setTitle(role + " Dashboard");
+        setSize(500, 350);  // increased size
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
 
-        Font headerFont = new Font("SansSerif", Font.BOLD, 22);
-        Font labelFont = new Font("SansSerif", Font.PLAIN, 16);
+        // Buttons
+        JButton registerUserBtn = new JButton("Register User");
+        JButton manageBooksBtn = new JButton("Manage Books");
+        JButton borrowBtn = new JButton("Borrow Book");
+        JButton returnBtn = new JButton("Return Book");
+        JButton exitBtn = new JButton("Exit");
 
-        JLabel welcomeLabel = new JLabel("Welcome, " + username + "!");
-        welcomeLabel.setFont(headerFont);
-        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // Button colors (simple and consistent)
+        Color btnBlue = new Color(0, 123, 255);
+        Color btnGreen = new Color(40, 167, 69);
+        Color btnRed = new Color(220, 53, 69);
+        Color btnTextColor = Color.WHITE;
 
-        JButton viewBooksBtn = createStyledButton("📚 View Books");
-        JButton issueBookBtn = createStyledButton("📖 Issue Book");
-        JButton returnBookBtn = createStyledButton("🔄 Return Book");
-        JButton registerUserBtn = createStyledButton("👤 Register User");
-        JButton logoutBtn = createStyledButton("🚪 Logout");
+        registerUserBtn.setBackground(btnBlue);
+        registerUserBtn.setForeground(btnTextColor);
+        registerUserBtn.setFocusPainted(false);
 
-        logoutBtn.setBackground(new Color(220, 53, 69));
-        logoutBtn.setForeground(Color.WHITE);
+        manageBooksBtn.setBackground(btnGreen);
+        manageBooksBtn.setForeground(btnTextColor);
+        manageBooksBtn.setFocusPainted(false);
 
-        // Button actions
-        viewBooksBtn.addActionListener(e -> {
-            new BookForm().setVisible(true);
-        });
+        borrowBtn.setBackground(new Color(0, 153, 204));
+        borrowBtn.setForeground(btnTextColor);
+        borrowBtn.setFocusPainted(false);
 
-        issueBookBtn.addActionListener(e -> {
-            new BorrowForm().setVisible(true);
-        });
+        returnBtn.setBackground(new Color(0, 153, 102));
+        returnBtn.setForeground(btnTextColor);
+        returnBtn.setFocusPainted(false);
 
-        returnBookBtn.addActionListener(e -> {
-            new ReturnForm().setVisible(true);
-        });
+        exitBtn.setBackground(btnRed);
+        exitBtn.setForeground(btnTextColor);
+        exitBtn.setFocusPainted(false);
 
-        registerUserBtn.addActionListener(e -> {
-            new RegistrationForm().setVisible(true);
-        });
+        Dimension btnSize = new Dimension(160, 50);
+        registerUserBtn.setPreferredSize(btnSize);
+        manageBooksBtn.setPreferredSize(btnSize);
+        borrowBtn.setPreferredSize(btnSize);
+        returnBtn.setPreferredSize(btnSize);
+        exitBtn.setPreferredSize(btnSize);
 
-        logoutBtn.addActionListener(e -> {
-            dispose();
-            new LoginWindow().setVisible(true);
-        });
+        // Action Listeners
+        registerUserBtn.addActionListener(e -> new RegistrationForm().setVisible(true));
+        manageBooksBtn.addActionListener(e -> new BookForm().setVisible(true));
+        borrowBtn.addActionListener(e -> new BorrowForm().setVisible(true));
+        returnBtn.addActionListener(e -> new ReturnForm().setVisible(true));
+        exitBtn.addActionListener(e -> dispose());
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
-        mainPanel.setBackground(new Color(245, 245, 250));
+        // Layout with GridBagLayout for neat arrangement
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(240, 240, 240));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, 20, 15, 20);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(registerUserBtn, gbc);
 
-        mainPanel.add(welcomeLabel);
-        mainPanel.add(Box.createVerticalStrut(30));
-        mainPanel.add(viewBooksBtn);
-        mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(issueBookBtn);
-        mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(returnBookBtn);
-        mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(registerUserBtn);
-        mainPanel.add(Box.createVerticalStrut(25));
-        mainPanel.add(logoutBtn);
+        gbc.gridx = 1;
+        panel.add(manageBooksBtn, gbc);
 
-        add(mainPanel);
-    }
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(borrowBtn, gbc);
 
-    private JButton createStyledButton(String text) {
-        JButton button = new JButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        button.setBackground(new Color(0, 123, 255));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setMaximumSize(new Dimension(250, 40));
+        gbc.gridx = 1;
+        panel.add(returnBtn, gbc);
 
-        button.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                button.setBackground(new Color(30, 144, 255));
-            }
-            public void mouseExited(MouseEvent e) {
-                button.setBackground(new Color(0, 123, 255));
-            }
-        });
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        panel.add(exitBtn, gbc);
 
-        return button;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Dashboard("Admin").setVisible(true));
+        add(panel);
     }
 }

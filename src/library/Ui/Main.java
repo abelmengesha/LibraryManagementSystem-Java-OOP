@@ -10,4 +10,4 @@ public class Main {
 
         SwingUtilities.invokeLater(() -> new LoginWindow().setVisible(true));
     }
-}
+}   
