@@ -1,8 +1,9 @@
 package library.models;
 
 import library.interfaces.Loggable;
+import library.interfaces.ReportGenerator;
 
-public class Book implements Loggable {
+public class Book implements Loggable, ReportGenerator {
     private int id;
     private String title;
     private String author;
@@ -42,5 +43,9 @@ public class Book implements Loggable {
      @Override
     public String getLogMessage() {
        return "User " + getId() + " (" + getAuthor() + getTitle() + ")";
+    }
+    @Override
+    public String generateReport() {
+        return "Book Report: " + getTitle() + " by " + getAuthor() + " (ISBN: " + getIsbn() + ")";
     }
 }
