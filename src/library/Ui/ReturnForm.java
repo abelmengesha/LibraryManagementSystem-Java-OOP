@@ -36,13 +36,13 @@
             borrowComboBox = new JComboBox<>();
             JButton returnBtn = new JButton("Return");
 
-            // Style button
+           
             returnBtn.setBackground(new Color(220, 53, 69)); // bootstrap red
             returnBtn.setForeground(Color.WHITE);
             returnBtn.setFocusPainted(false);
             returnBtn.setPreferredSize(new Dimension(100, 50));
 
-            // Add components with labels
+
             gbc.gridx = 0;
             gbc.gridy = 0;
             panel.add(new JLabel("Select User:"), gbc);

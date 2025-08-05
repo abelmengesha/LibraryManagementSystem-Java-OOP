@@ -16,7 +16,7 @@ public class LoginWindow extends JFrame {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ignored) {}
 
-        // Set layout
+        
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(240, 240, 240)); // light gray background
         GridBagConstraints gbc = new GridBagConstraints();
@@ -39,7 +39,7 @@ public class LoginWindow extends JFrame {
         JButton studentBtn = new JButton("Student");
         JButton librarianBtn = new JButton("Librarian");
 
-        // Button colors and styling
+      
         studentBtn.setBackground(new Color(0, 123, 255)); // blue
         studentBtn.setForeground(Color.WHITE);
         studentBtn.setFocusPainted(false);
@@ -64,7 +64,7 @@ public class LoginWindow extends JFrame {
 
         add(panel);
 
-        // Action Listeners
+        
         studentBtn.addActionListener(e -> {
             new Dashboard("Student").setVisible(true);
             dispose();

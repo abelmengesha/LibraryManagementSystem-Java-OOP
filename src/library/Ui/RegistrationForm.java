@@ -35,7 +35,7 @@ public class RegistrationForm extends JFrame {
         registerBtn.setFocusPainted(false);
         registerBtn.setPreferredSize(new Dimension(120, 40));
 
-        // Name Label and Field
+       
         gbc.gridx = 0;
         gbc.gridy = 0;
         panel.add(new JLabel("Name:"), gbc);
@@ -43,7 +43,7 @@ public class RegistrationForm extends JFrame {
         gbc.gridx = 1;
         panel.add(nameField, gbc);
 
-        // Email Label and Field
+       
         gbc.gridx = 0;
         gbc.gridy = 1;
         panel.add(new JLabel("Email:"), gbc);
@@ -51,7 +51,7 @@ public class RegistrationForm extends JFrame {
         gbc.gridx = 1;
         panel.add(emailField, gbc);
 
-        // Role Label and ComboBox
+       
         gbc.gridx = 0;
         gbc.gridy = 2;
         panel.add(new JLabel("Role:"), gbc);
@@ -59,7 +59,7 @@ public class RegistrationForm extends JFrame {
         gbc.gridx = 1;
         panel.add(roleCombo, gbc);
 
-        // Register Button
+       
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
@@ -71,7 +71,7 @@ public class RegistrationForm extends JFrame {
             String email = emailField.getText().trim();
             String role = ((String) roleCombo.getSelectedItem()).trim();
 
-            // Normalize role string to match DB CHECK constraint
+
             if (role.equalsIgnoreCase("student")) {
                 role = "Student";
             } else if (role.equalsIgnoreCase("librarian")) {
