@@ -37,13 +37,12 @@ public class BorrowForm extends JFrame {
         bookComboBox = new JComboBox<>();
         JButton borrowBtn = new JButton("Borrow");
 
-        // Style button
         borrowBtn.setBackground(new Color(0, 123, 255));
         borrowBtn.setForeground(Color.WHITE);
         borrowBtn.setFocusPainted(false);
         borrowBtn.setPreferredSize(new Dimension(100, 50));
 
-        // Add components with labels and spacing
+        
         gbc.gridx = 0;
         gbc.gridy = 0;
         panel.add(new JLabel("Select User:"), gbc);

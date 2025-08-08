@@ -7,24 +7,23 @@ public class LoginWindow extends JFrame {
 
     public LoginWindow() {
         setTitle("Library Login");
-        setSize(500, 300);  // increased size
+        setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Center on screen
+        setLocationRelativeTo(null);
         setResizable(false);
 
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ignored) {}
 
-        // Set layout
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(240, 240, 240)); // light gray background
+        panel.setBackground(new Color(240, 240, 240));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(15, 15, 15, 15);
 
         JLabel titleLabel = new JLabel("Library Management System");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setForeground(new Color(0, 51, 102)); // dark blue
+        titleLabel.setForeground(new Color(0, 51, 102));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -32,20 +31,19 @@ public class LoginWindow extends JFrame {
 
         JLabel roleLabel = new JLabel("Select Your Role:");
         roleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        roleLabel.setForeground(new Color(80, 80, 80)); // medium gray
+        roleLabel.setForeground(new Color(80, 80, 80));
         gbc.gridy = 1;
         panel.add(roleLabel, gbc);
 
         JButton studentBtn = new JButton("Student");
         JButton librarianBtn = new JButton("Librarian");
 
-        // Button colors and styling
-        studentBtn.setBackground(new Color(0, 123, 255)); // blue
+        studentBtn.setBackground(new Color(0, 123, 255));
         studentBtn.setForeground(Color.WHITE);
         studentBtn.setFocusPainted(false);
         studentBtn.setBorder(BorderFactory.createLineBorder(new Color(0, 90, 190)));
 
-        librarianBtn.setBackground(new Color(40, 167, 69)); // green
+        librarianBtn.setBackground(new Color(40, 167, 69));
         librarianBtn.setForeground(Color.WHITE);
         librarianBtn.setFocusPainted(false);
         librarianBtn.setBorder(BorderFactory.createLineBorder(new Color(30, 140, 50)));
@@ -64,7 +62,6 @@ public class LoginWindow extends JFrame {
 
         add(panel);
 
-        // Action Listeners
         studentBtn.addActionListener(e -> {
             new Dashboard("Student").setVisible(true);
             dispose();
